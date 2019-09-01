@@ -23,7 +23,7 @@ CREATE TABLE `files` (
   `category` int(11) DEFAULT NULL,
   `content` mediumtext NOT NULL,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `date` datetime NOT NULL,
+  `datetime` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `files_FK` (`owner`),
   KEY `files_FK_1` (`category`),
