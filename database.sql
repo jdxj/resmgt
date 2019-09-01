@@ -5,16 +5,16 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `categorys` (
+CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `pid` int(11) DEFAULT NULL,
   `owner` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `categorys_FK` (`owner`),
-  KEY `categorys_FK_1` (`pid`),
-  CONSTRAINT `categorys_FK` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `categorys_FK_1` FOREIGN KEY (`pid`) REFERENCES `categorys` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `categories_FK` (`owner`),
+  KEY `categories_FK_1` (`pid`),
+  CONSTRAINT `categories_FK` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `categories_FK_1` FOREIGN KEY (`pid`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `files` (
