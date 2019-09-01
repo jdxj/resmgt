@@ -21,6 +21,7 @@ CREATE TABLE `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `owner` int(11) NOT NULL,
   `category` int(11) DEFAULT NULL,
+  `type` int(11) NOT NULL DEFAULT '0',
   `content` mediumblob NOT NULL,
   `name` varchar(100) NOT NULL,
   `date` datetime NOT NULL,
