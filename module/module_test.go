@@ -93,3 +93,16 @@ func TestRolePermMod(t *testing.T) {
 	db.First(&rp)
 	fmt.Println(rp)
 }
+
+func TestGormFind(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+
+	var files []File
+	db.Find(&files)
+	for _, f := range files {
+		fmt.Println(f)
+	}
+}
