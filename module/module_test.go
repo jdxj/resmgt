@@ -57,3 +57,39 @@ func TestCategoryMod(t *testing.T) {
 	db.First(&category)
 	fmt.Println(category)
 }
+
+func TestRoleMod(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	role := Role{}
+	db.First(&role)
+	fmt.Println(role)
+}
+
+func TestPermissionMod(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	perm := Permission{}
+	db.First(&perm)
+	fmt.Println(perm)
+}
+
+func TestRolePermMod(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	rp := RolePerm{}
+	db.First(&rp)
+	fmt.Println(rp)
+}
