@@ -9,12 +9,25 @@ func main() {
 	r := gin.Default()
 	r.GET("/", handler.Home)
 
-	// todo: 权限验证 (登录)
-	authorized := r.Group("/auth", gin.BasicAuth(gin.Accounts{
-		"jdxj": "jdxj",
-		"test": "test",
-	}))
-	authorized.GET("/secrets", handler.Login)
+	// login
+	{
+		r.GET("/login", func(c *gin.Context) {
+			c.JSON(400, gin.H{
+				"err": "please use post method",
+			})
+		})
+		r.POST("/login", handler.Login)
+	}
+
+	authorized := r.Group("/files")
+	authorized.Use(handler.Authenticate)
+	{
+		authorized.GET("", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"state": "pass",
+			})
+		})
+	}
 
 	r.Run(":49158")
 }

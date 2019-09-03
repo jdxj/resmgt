@@ -99,10 +99,24 @@ func TestGormFind(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 
 	var files []File
 	db.Find(&files)
 	for _, f := range files {
 		fmt.Println(f)
 	}
+}
+
+func TestFindUser(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	var user User
+	db.Where("name = ? and password = ?", "jdxj", "jdxj").Find(&user)
+
+	fmt.Println(user)
 }
