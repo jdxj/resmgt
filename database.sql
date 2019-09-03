@@ -2,7 +2,10 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `users_FK` (`role`),
+  CONSTRAINT `users_FK` FOREIGN KEY (`role`) REFERENCES `roles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `categories` (
