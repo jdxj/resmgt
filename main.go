@@ -21,12 +21,13 @@ func main() {
 
 	authorized := r.Group("/files")
 	authorized.Use(handler.Authenticate)
+
+	// 文章操作
 	{
-		authorized.GET("", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"state": "pass",
-			})
-		})
+		// 获取用户所有文章
+		authorized.GET("", handler.GetUserFiles)
+		// 创建新文章
+		authorized.POST("", handler.CreateFile)
 	}
 
 	r.Run(":49158")

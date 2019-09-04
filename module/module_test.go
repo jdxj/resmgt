@@ -5,6 +5,7 @@ import (
 	"github.com/bradfitz/gomemcache/memcache"
 	"resmgt/util"
 	"testing"
+	"time"
 )
 
 func TestUserMod(t *testing.T) {
@@ -119,4 +120,22 @@ func TestFindUser(t *testing.T) {
 	db.Where("name = ? and password = ?", "jdxj", "jdxj").Find(&user)
 
 	fmt.Println(user)
+}
+
+func TestInsertFile(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	file := File{
+		ID:       0,
+		Owner:    0,
+		Category: nil,
+		Content:  "3333",
+		Title:    "9001",
+		DateTime: time.Now(),
+	}
+	db.Create(&file)
 }

@@ -54,11 +54,11 @@ func Login(c *gin.Context) {
 	err = util.GetCache().Set(&item)
 	if err != nil {
 		fmt.Println(err)
-		c.AbortWithStatusJSON(500, gin.H{
-			"err": "error to cache",
-		})
 		return
 	}
+	c.JSON(200, gin.H{
+		"msg": "login success",
+	})
 }
 
 func Authenticate(c *gin.Context) {
