@@ -28,6 +28,8 @@ func main() {
 		authorized.GET("", handler.GetUserFiles)
 		// 创建新文章
 		authorized.POST("", handler.CreateFile)
+		// 删除文章
+		authorized.DELETE("", handler.DeleteFile)
 	}
 
 	r.Run(":49158")

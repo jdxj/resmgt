@@ -139,3 +139,16 @@ func TestInsertFile(t *testing.T) {
 	}
 	db.Create(&file)
 }
+
+func TestDelFile(t *testing.T) {
+	db, err := util.GetDB()
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	file := File{ID: 8}
+	if err := db.Delete(&file).Error; err != nil {
+		panic(err)
+	}
+}

@@ -11,6 +11,7 @@ import (
 )
 
 func GetUserFiles(c *gin.Context) {
+	// todo: 获取文章权限检查
 	token, err := c.Cookie("id")
 	if err != nil {
 		fmt.Println(err)
@@ -47,6 +48,7 @@ func GetUserFiles(c *gin.Context) {
 }
 
 func CreateFile(c *gin.Context) {
+	// todo: 创建文章权限检查
 	title := c.PostForm("title")
 	content := c.PostForm("content")
 	categoryStr := c.PostForm("category")
@@ -107,7 +109,7 @@ func CreateFile(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(500, gin.H{
-			"er": "can't create file",
+			"err": "can't create file",
 		})
 		return
 	}
@@ -116,5 +118,40 @@ func CreateFile(c *gin.Context) {
 	db.Create(&file)
 	c.JSON(200, gin.H{
 		"msg": "create success",
+	})
+}
+
+func DeleteFile(c *gin.Context) {
+	// todo: 删除文章权限检查
+	s := c.PostForm("id")
+	id, err := strconv.Atoi(s)
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(400, gin.H{
+			"err": "file not found",
+		})
+		return
+	}
+	db, err := util.GetDB()
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(500, gin.H{
+			"err": "can't access database",
+		})
+		return
+	}
+	defer db.Close()
+
+	file := module.File{ID: id}
+	if err := db.Delete(&file).Error; err != nil {
+		fmt.Println(err)
+		c.JSON(400, gin.H{
+			"err": "record not found",
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"msg": "delete ok",
 	})
 }
