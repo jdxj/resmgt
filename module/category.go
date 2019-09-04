@@ -3,6 +3,6 @@ package module
 type Category struct {
 	ID    int
 	Name  string
-	Pid   int
+	Pid   *int
 	Owner int
 }
