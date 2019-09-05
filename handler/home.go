@@ -7,14 +7,8 @@ import (
 )
 
 func Home(c *gin.Context) {
-	db, err := util.GetDB()
-	if err != nil {
-		return
-	}
-	defer db.Close()
-
 	var files []module.File
-	db.Find(&files)
+	util.MyDB.Find(&files)
 
 	c.JSON(200, files)
 }

@@ -33,17 +33,7 @@ func GetUserFiles(c *gin.Context) {
 	var files []module.File
 	json.Unmarshal(item.Value, &user)
 
-	db, err := util.GetDB()
-	if err != nil {
-		fmt.Println(err)
-		c.JSON(500, gin.H{
-			"err": "can't access database",
-		})
-		return
-	}
-	defer db.Close()
-
-	db.Where("owner = ?", user.ID).Find(&files)
+	util.MyDB.Where("owner = ?", user.ID).Find(&files)
 	c.JSON(200, files)
 }
 
@@ -105,17 +95,7 @@ func CreateFile(c *gin.Context) {
 		DateTime: time.Now(),
 	}
 
-	db, err := util.GetDB()
-	if err != nil {
-		fmt.Println(err)
-		c.JSON(500, gin.H{
-			"err": "can't create file",
-		})
-		return
-	}
-	defer db.Close()
-
-	db.Create(&file)
+	util.MyDB.Create(&file)
 	c.JSON(200, gin.H{
 		"msg": "create success",
 	})
@@ -132,18 +112,9 @@ func DeleteFile(c *gin.Context) {
 		})
 		return
 	}
-	db, err := util.GetDB()
-	if err != nil {
-		fmt.Println(err)
-		c.JSON(500, gin.H{
-			"err": "can't access database",
-		})
-		return
-	}
-	defer db.Close()
 
 	file := module.File{ID: id}
-	if err := db.Delete(&file).Error; err != nil {
+	if err := util.MyDB.Delete(&file).Error; err != nil {
 		fmt.Println(err)
 		c.JSON(400, gin.H{
 			"err": "record not found",

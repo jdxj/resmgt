@@ -9,14 +9,8 @@ import (
 )
 
 func TestUserMod(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	user := User{}
-	db.First(&user)
+	util.MyDB.First(&user)
 	fmt.Println(user)
 }
 
@@ -36,99 +30,51 @@ func TestGoMemCached(t *testing.T) {
 }
 
 func TestFileMod(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	file := File{}
-	db.First(&file)
+	util.MyDB.First(&file)
 	fmt.Println(file)
 }
 
 func TestCategoryMod(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	category := Category{}
-	db.First(&category)
+	util.MyDB.First(&category)
 	fmt.Println(category)
 }
 
 func TestRoleMod(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	role := Role{}
-	db.First(&role)
+	util.MyDB.First(&role)
 	fmt.Println(role)
 }
 
 func TestPermissionMod(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	perm := Permission{}
-	db.First(&perm)
+	util.MyDB.First(&perm)
 	fmt.Println(perm)
 }
 
 func TestRolePermMod(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	rp := RolePerm{}
-	db.First(&rp)
+	util.MyDB.First(&rp)
 	fmt.Println(rp)
 }
 
 func TestGormFind(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	var files []File
-	db.Find(&files)
+	util.MyDB.Find(&files)
 	for _, f := range files {
 		fmt.Println(f)
 	}
 }
 
 func TestFindUser(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	var user User
-	db.Where("name = ? and password = ?", "jdxj", "jdxj").Find(&user)
+	util.MyDB.Where("name = ? and password = ?", "jdxj", "jdxj").Find(&user)
 
 	fmt.Println(user)
 }
 
 func TestInsertFile(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	file := File{
 		ID:       0,
 		Owner:    0,
@@ -137,18 +83,12 @@ func TestInsertFile(t *testing.T) {
 		Title:    "9001",
 		DateTime: time.Now(),
 	}
-	db.Create(&file)
+	util.MyDB.Create(&file)
 }
 
 func TestDelFile(t *testing.T) {
-	db, err := util.GetDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	file := File{ID: 8}
-	if err := db.Delete(&file).Error; err != nil {
+	if err := util.MyDB.Delete(&file).Error; err != nil {
 		panic(err)
 	}
 }

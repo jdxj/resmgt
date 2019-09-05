@@ -16,21 +16,10 @@ func Login(c *gin.Context) {
 	name := c.PostForm("name")
 	password := c.PostForm("password")
 
-	db, err := util.GetDB()
-	if err != nil {
-		fmt.Println(err)
-		c.AbortWithStatusJSON(500, gin.H{
-			"err": "data illegal",
-		})
-		return
-	}
-	defer db.Close()
-
 	var user module.User
-	db.Where("name = ? and password = ?", name, password).Find(&user)
+	util.MyDB.Where("name = ? and password = ?", name, password).Find(&user)
 
 	if user.Name == "" { // 没找到
-		fmt.Println(err)
 		c.AbortWithStatusJSON(400, gin.H{
 			"err": "user name or password error",
 		})
@@ -51,7 +40,7 @@ func Login(c *gin.Context) {
 		Key:   timestamp,
 		Value: value,
 	}
-	err = util.GetCache().Set(&item)
+	err := util.GetCache().Set(&item)
 	if err != nil {
 		fmt.Println(err)
 		return
