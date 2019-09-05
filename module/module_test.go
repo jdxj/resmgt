@@ -14,6 +14,14 @@ func TestUserMod(t *testing.T) {
 	fmt.Println(user)
 }
 
+func TestFindUsers(t *testing.T) {
+	var users []User
+	util.MyDB.Find(&users)
+	for _, user := range users {
+		fmt.Println(user)
+	}
+}
+
 func TestGoMemCached(t *testing.T) {
 	mc := memcache.New(":11211")
 	item := memcache.Item{

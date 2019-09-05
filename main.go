@@ -25,11 +25,11 @@ func main() {
 	// 文章操作
 	{
 		// 获取用户所有文章
-		authorized.GET("", handler.GetUserFiles)
+		authorized.GET("", handler.AuthGet, handler.GetUserFiles)
 		// 创建新文章
-		authorized.POST("", handler.CreateFile)
+		authorized.POST("", handler.AuthCreate, handler.CreateFile)
 		// 删除文章
-		authorized.DELETE("", handler.DeleteFile)
+		authorized.DELETE("", handler.AuthDelete, handler.DeleteFile)
 	}
 
 	r.Run(":49158")
