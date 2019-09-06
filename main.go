@@ -23,17 +23,29 @@ func main() {
 		r.POST("/login", handler.Login)
 	}
 
-	authorized := r.Group("/files")
-	authorized.Use(handler.Authenticate)
-
 	// 文章操作
+	filesAuth := r.Group("/files")
+	filesAuth.Use(handler.Authenticate)
 	{
 		// 获取用户所有文章
-		authorized.GET("", handler.AuthGet, handler.GetUserFiles)
+		filesAuth.GET("", handler.AuthGet, handler.GetUserFiles)
 		// 创建新文章
-		authorized.POST("", handler.AuthCreate, handler.CreateFile)
+		filesAuth.POST("", handler.AuthCreate, handler.CreateFile)
 		// 删除文章
-		authorized.DELETE("", handler.AuthDelete, handler.DeleteFile)
+		filesAuth.DELETE("", handler.AuthDelete, handler.DeleteFile)
+	}
+
+	catAuth := r.Group("/categories")
+	catAuth.Use(handler.Authenticate)
+	// 分类操作
+	{
+		// todo: 权限验证
+		// 获取分类
+		catAuth.GET("", handler.GetUserCategories)
+		// 创建分类
+		catAuth.POST("", handler.CreateCategory)
+		// 删除分类
+		catAuth.DELETE("", handler.DeleteCategory)
 	}
 
 	if err := endless.ListenAndServe(":49158", r); err != nil {

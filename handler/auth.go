@@ -131,6 +131,9 @@ func curUser(c *gin.Context) *module.User {
 // checkPerm 检查 user 是否具有指定权限
 func checkPerm(c *gin.Context, perm int) bool {
 	user := curUser(c)
+	if user == nil {
+		return false
+	}
 	if user.Role == nil { // 默认对 null 记录的用户采取拒绝
 		return false
 	}
