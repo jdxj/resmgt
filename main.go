@@ -8,7 +8,6 @@ import (
 )
 
 // todo: 整理一些配置到 main 中
-// todo: 分类管理
 func main() {
 	r := gin.Default()
 	r.GET("/", handler.Home)
@@ -39,13 +38,12 @@ func main() {
 	catAuth.Use(handler.Authenticate)
 	// 分类操作
 	{
-		// todo: 权限验证
 		// 获取分类
-		catAuth.GET("", handler.GetUserCategories)
+		catAuth.GET("", handler.AuthCateBrowse, handler.GetUserCategories)
 		// 创建分类
-		catAuth.POST("", handler.CreateCategory)
+		catAuth.POST("", handler.AuthCateCreate, handler.CreateCategory)
 		// 删除分类
-		catAuth.DELETE("", handler.DeleteCategory)
+		catAuth.DELETE("", handler.AuthCateDelete, handler.DeleteCategory)
 	}
 
 	if err := endless.ListenAndServe(":49158", r); err != nil {

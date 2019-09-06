@@ -85,6 +85,11 @@ const (
 	Delete
 	BrowseOwn
 	BrowOther
+	CateCrete
+	CateModify
+	CateDelete
+	CateBrowse
+	CateBroOth
 )
 
 // AuthGet 验证用户是否有获取其自己 file 的权限
@@ -149,4 +154,45 @@ func checkPerm(c *gin.Context, perm int) bool {
 		}
 	}
 	return false
+}
+
+func AuthCateCreate(c *gin.Context) {
+	if !checkPerm(c, CateCrete) {
+		c.AbortWithStatusJSON(400, gin.H{
+			"err": "permission denied on create cate",
+		})
+	}
+}
+
+func AuthCateModify(c *gin.Context) {
+	if !checkPerm(c, CateModify) {
+		c.AbortWithStatusJSON(400, gin.H{
+			"err": "permission denied on modify cate",
+		})
+	}
+
+}
+
+func AuthCateDelete(c *gin.Context) {
+	if !checkPerm(c, CateDelete) {
+		c.AbortWithStatusJSON(400, gin.H{
+			"err": "permission denied on delete cate",
+		})
+	}
+}
+
+func AuthCateBrowse(c *gin.Context) {
+	if !checkPerm(c, CateBrowse) {
+		c.AbortWithStatusJSON(400, gin.H{
+			"err": "permission denied on browse cate",
+		})
+	}
+}
+
+func AuthCateBroOth(c *gin.Context) {
+	if !checkPerm(c, CateBroOth) {
+		c.AbortWithStatusJSON(400, gin.H{
+			"err": "permission denied on browse other cate",
+		})
+	}
 }
