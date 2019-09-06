@@ -1,10 +1,14 @@
 package main
 
 import (
+	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
 	"resmgt/handler"
+	"resmgt/util"
 )
 
+// todo: 整理一些配置到 main 中
+// todo: 分类管理
 func main() {
 	r := gin.Default()
 	r.GET("/", handler.Home)
@@ -32,5 +36,8 @@ func main() {
 		authorized.DELETE("", handler.AuthDelete, handler.DeleteFile)
 	}
 
-	r.Run(":49158")
+	if err := endless.ListenAndServe(":49158", r); err != nil {
+		// 释放资源
+		util.MyDB.Close()
+	}
 }
